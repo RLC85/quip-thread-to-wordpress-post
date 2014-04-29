@@ -25,11 +25,28 @@ function quip_show_settings() {
 		update_option('quip-home-folder',$_POST['quip-home-folder']);
 	}
 	include('functions.php');
-	$folder = get_folder('YNAAOAYXjGs');
-	var_dump($folder);
+	$folder = json_decode(get_folder('YNAAOAYXjGs'));
+
 	include(BASE_DIR.'templates/main.php');
 }
 
-function quip_get_folders() {
-
+function loop_children($children,$parent_title='') {
+	$html = '';
+	foreach($children as $child) {
+		if(isset($child->folder_id)) {
+			$folder = json_decode(get_folder($child->folder_id));
+			$title  = $folder->folder->title;
+			$html  .= "<li><h4>$parent_title/$title</h4><ul>";
+			$html  .= loop_children($folder->children,$title);
+			$html  .= '</ul></li>';
+		} else if(isset($child->thread_id)) {
+			$thread = json_decode(get_thread($child->thread_id));
+			$title = $thread->thread->title;
+			$html  .= "
+<li>
+	<span>$parent_title/$title</span>
+</li>";
+		}
+	}
+	return $html;
 }

@@ -29,10 +29,10 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-define(BASE_DIR,plugin_dir_path(__FILE__));
+define('BASE_DIR',plugin_dir_path(__FILE__));
 
 include('includes/main.php');
-include('includes/quip_import.php');
-include('includes/sync.php');
+// include('includes/quip_import.php');
+// include('includes/sync.php');
 include('includes/hooks.php');
 
