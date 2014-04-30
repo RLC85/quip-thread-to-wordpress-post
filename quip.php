@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Akismet
+ * @package Quip to Wordpress
  */
 /*
 Plugin Name: Quip to Wordpress
@@ -31,7 +31,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 define('BASE_DIR',plugin_dir_path(__FILE__));
 
+function create_quip_categorymeta() {
+	global $wpdb;
+	$table = $wpdb->prefix . 'quip_categorymeta';
+	$sql = "CREATE TABLE IF NOT EXISTS `$table` (
+		meta_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		category_id INT NOT NULL,
+		meta_key VARCHAR(200) NOT NULL,
+		meta_value longtext ); ";
+
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta($sql);
+	
+}
+
+register_activation_hook(__FILE__,'create_quip_categorymeta');
+
 include('includes/main.php');
+include('includes/functions.php');
 // include('includes/quip_import.php');
 // include('includes/sync.php');
 include('includes/hooks.php');

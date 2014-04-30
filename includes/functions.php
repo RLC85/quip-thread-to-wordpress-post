@@ -73,19 +73,17 @@ function get_folders($folder_id_array = array()) {
  * @return JSON
  */
 function create_folder($title='',$parent_id=null,$color=null) {
-	$count = 0;
+	
 	if( $title === '') {
 		return false;
 	}
-	$count++;
-	$fields = urlencode($title);
+
+	$fields['title'] = urlencode($title);
 	if( !empty($parent_id)) {
-		$fields .= '&' . urlencode($parent_id);
-		$count++;
+		$fields['parent_id'] = urlencode($parent_id);
 	}
 	if(!empty($color)) {
-		$fields .= '&' .urlencode($color);
-		$count++;
+		$fields['color'] = urlencode($color);
 	}
 
 	$url          = 'https://platform.quip.com/1/folders/new';
@@ -94,8 +92,8 @@ function create_folder($title='',$parent_id=null,$color=null) {
 
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_URL,        $url);
-	curl_setopt($ch, CURLOPT_POST,       $count);
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+	curl_setopt($ch, CURLOPT_POST,       1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($fields));
 	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $access_token));
 
 	if( ! $result = curl_exec($ch)) { 

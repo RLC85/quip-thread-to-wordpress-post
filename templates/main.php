@@ -38,11 +38,3 @@
 		</tr>
 	</table>
 </form>
-
-
-<section>
-	<ul>
-		<li><h3>Home Folder Document Tree</h3></li>
-		<?php echo loop_children($folder->children,$folder->folder->title); ?>
-	</ul>
-</section>

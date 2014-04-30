@@ -24,7 +24,6 @@ function quip_show_settings() {
 	if(isset($_POST['quip-home-folder'])) {
 		update_option('quip-home-folder',$_POST['quip-home-folder']);
 	}
-	include('functions.php');
 	$folder = json_decode(get_folder('YNAAOAYXjGs'));
 
 	include(BASE_DIR.'templates/main.php');
